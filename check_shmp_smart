@@ -1,0 +1,16 @@
+#!/bin/sh
+
+result=`/usr/bin/snmpwalk -v3  -l authPriv -u support -a MD5 -A myauthpass  -x DES -X myprivpass $1  .1.3.6.1.4.1.2021.8.1.101.$2  | /usr/bin/awk '{printf $4}'`
+
+if [ "$result" = "OK" ]
+then
+echo $result
+exit 0
+#else
+echo $result 
+exit 1
+fi
+
+
+
+

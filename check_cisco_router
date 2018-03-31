@@ -1,0 +1,22 @@
+#!/bin/sh
+#Dmitriy Litvin 2014
+
+cisco_cpu=`/usr/bin/snmpwalk -v 1 -O n -c $1 $2  .1.3.6.1.4.1.9.9.109.1.1.1.1.5.1 | /usr/bin/awk '{printf $4}'`
+cisco_temp=`/usr/bin/snmpwalk -v 1 -O n -c $1 $2 .1.3.6.1.4.1.9.9.13.1.3.1.3.1 | /usr/bin/awk '{printf $4}'`
+
+if [[ $cisco_cpu >  "85" ]]
+then
+echo PROBLEM, CPU Usage: $cisco_cpu %, Temp: $cisco_temp c
+exit 1
+#else
+fi
+
+if [[ $cisco_temp >  "30" ]]
+then
+echo PROBLEM, CPU Usage: $cisco_cpu %, Temp: $cisco_temp c
+exit 1
+#else
+fi
+
+echo CPU Usage: $cisco_cpu %, Temp: $cisco_temp c
+exit 0
